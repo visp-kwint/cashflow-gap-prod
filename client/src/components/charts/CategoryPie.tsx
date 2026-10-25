@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 import { formatRub } from '@/lib/format';
 import './category-pie.css';
@@ -54,6 +55,19 @@ function PieTooltip({
   );
 }
 
+// Узкий экран (телефон): легенду переносим снизу сеткой 2×N — вертикальная легенда
+// реcharts вбок сжимает пирог и диаграмма «поехалой» (сегменты наезжают на подписи).
+function useNarrow() {
+  const [narrow, setNarrow] = useState(() => window.matchMedia('(max-width: 639px)').matches);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 639px)');
+    const onChange = (e: MediaQueryListEvent) => setNarrow(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+  return narrow;
+}
+
 export function CategoryPie({
   items,
   height = 240,
@@ -61,39 +75,52 @@ export function CategoryPie({
   items: Array<{ key: string; label: string; value: number }>;
   height?: number;
 }) {
+  const narrow = useNarrow();
   const data = items.map((it) => ({ ...it, fill: colorFor(it.key) }));
   return (
     <div className="category-pie-enter">
-    <ResponsiveContainer width="100%" height={height}>
-      <PieChart>
-        <Pie
-          data={data}
-          dataKey="value"
-          nameKey="label"
-          innerRadius={62}
-          outerRadius={96}
-          paddingAngle={3}
-          stroke="#1f2024"
-          strokeWidth={2}
-          isAnimationActive
-          animationBegin={120}
-          animationDuration={800}
-          animationEasing="ease-out"
-        >
+      <ResponsiveContainer width="100%" height={narrow ? Math.max(height, 260) : height}>
+        <PieChart>
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="label"
+            innerRadius={62}
+            outerRadius={96}
+            paddingAngle={3}
+            stroke="#1f2024"
+            strokeWidth={2}
+            isAnimationActive
+            animationBegin={120}
+            animationDuration={800}
+            animationEasing="ease-out"
+          >
+            {data.map((d) => (
+              <Cell key={d.key} fill={d.fill} />
+            ))}
+          </Pie>
+          <Tooltip content={<PieTooltip items={items} />} />
+          {!narrow && (
+            <Legend
+              layout="vertical"
+              align="right"
+              verticalAlign="middle"
+              iconSize={12}
+              wrapperStyle={{ fontSize: 12, color: '#979aa1', lineHeight: 1.8 }}
+            />
+          )}
+        </PieChart>
+      </ResponsiveContainer>
+      {narrow && (
+        <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs text-slate-400">
           {data.map((d) => (
-            <Cell key={d.key} fill={d.fill} />
+            <li key={d.key} className="flex items-center gap-2">
+              <span className="inline-block h-2.5 w-2.5 shrink-0 rounded-sm" style={{ backgroundColor: d.fill }} />
+              <span className="leading-tight">{d.label}</span>
+            </li>
           ))}
-        </Pie>
-        <Tooltip content={<PieTooltip items={items} />} />
-        <Legend
-          layout="vertical"
-          align="right"
-          verticalAlign="middle"
-          iconSize={12}
-          wrapperStyle={{ fontSize: 12, color: '#979aa1', lineHeight: 1.8 }}
-        />
-      </PieChart>
-    </ResponsiveContainer>
+        </ul>
+      )}
     </div>
   );
 }
