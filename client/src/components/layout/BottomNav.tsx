@@ -15,12 +15,17 @@ const ITEMS = [
 export function BottomNav() {
   const { pathname } = useLocation();
   const staticMode = pathname === '/calendar';
-  // Футер выезжает при любом небольшом скролле вниз и прячется в самом верху страницы
-  const [shown, setShown] = useState(true);
+  // Не в самом верху (в т.ч. после обновления в середине страницы) — футер виден.
+  const [shown, setShown] = useState(() => window.scrollY > 0);
   useEffect(() => {
     if (staticMode) return;
+    let lastY = window.scrollY;
     function onScroll() {
-      setShown(window.scrollY > 16);
+      const y = window.scrollY;
+      if (y === 0) setShown(false);       // самый верх — всегда скрыт
+      else if (y > lastY) setShown(true); // скролл вниз — поднимаем футер
+      else if (y < lastY) setShown(false);// скролл вверх — прячем
+      lastY = y;
     }
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
