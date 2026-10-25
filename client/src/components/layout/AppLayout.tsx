@@ -13,7 +13,7 @@ export default function AppLayout() {
   const staticFooter = pathname === '/calendar';
 
   return (
-    <div className="min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-30 border-b border-slate-800 bg-slate-900/95 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-3 py-3 sm:px-6">
           <div className="min-w-0">
@@ -29,7 +29,7 @@ export default function AppLayout() {
       <main
         className={cn(
           'mx-auto w-full max-w-5xl px-3 py-4 sm:px-6',
-          staticFooter ? 'pb-4' : 'pb-24',
+          staticFooter ? 'flex-1 pb-4' : 'pb-24',
         )}
       >
         <Outlet />
