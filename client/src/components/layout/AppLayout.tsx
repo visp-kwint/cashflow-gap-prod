@@ -1,12 +1,16 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { LogOut } from 'lucide-react';
 import { useAuthStore } from '@/store/auth';
 import { Button } from '@/components/ui';
+import { cn } from '@/lib/cn';
 import { BottomNav } from '@/components/layout/BottomNav';
 
 export default function AppLayout() {
   const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
+  const { pathname } = useLocation();
+  // На календаре футер статичный (в потоке) — запас под fixed-футер не нужен
+  const staticFooter = pathname === '/calendar';
 
   return (
     <div className="min-h-screen">
@@ -22,7 +26,12 @@ export default function AppLayout() {
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-5xl px-3 py-4 pb-24 sm:px-6">
+      <main
+        className={cn(
+          'mx-auto w-full max-w-5xl px-3 py-4 sm:px-6',
+          staticFooter ? 'pb-4' : 'pb-24',
+        )}
+      >
         <Outlet />
       </main>
 

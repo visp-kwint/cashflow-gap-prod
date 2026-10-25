@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { CreditCard, History, Home, LifeBuoy } from 'lucide-react';
 import { cn } from '@/lib/cn';
 
@@ -10,23 +10,29 @@ const ITEMS = [
   { to: '/support', label: 'Поддержка', icon: LifeBuoy },
 ];
 
+// Календарь — короткая страница: выездной футер на ней багается
+// (прячется/выезжает на каждом мелком скролле). Там футер рендерим статичным.
 export function BottomNav() {
+  const { pathname } = useLocation();
+  const staticMode = pathname === '/calendar';
   // Футер выезжает при любом небольшом скролле вниз и прячется в самом верху страницы
   const [shown, setShown] = useState(true);
   useEffect(() => {
+    if (staticMode) return;
     function onScroll() {
       setShown(window.scrollY > 16);
     }
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [staticMode]);
 
   return (
     <nav
       className={cn(
-        'fixed inset-x-0 bottom-0 z-40 border-t border-slate-800 bg-slate-900/95 pb-safe backdrop-blur',
-        shown ? 'nav-footer-shown' : 'nav-footer-hidden',
+        'z-40 border-t border-slate-800 bg-slate-900/95 pb-safe backdrop-blur',
+        staticMode ? 'relative' : 'fixed inset-x-0 bottom-0',
+        !staticMode && (shown ? 'nav-footer-shown' : 'nav-footer-hidden'),
       )}
     >
       <div className="mx-auto grid max-w-5xl grid-cols-4">
