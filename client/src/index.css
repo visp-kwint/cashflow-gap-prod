@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-100 antialiased;
+  }
+
+  /* By default, grid items have min-width:auto — wide charts break the mobile layout */
+  .grid > * {
+    min-width: 0;
+  }
+
+  .recharts-responsive-container {
+    max-width: 100%;
+  }
+}
+
+@layer utilities {
+  .hist-slide-next {
+    animation: hist-slide-next 0.25s ease-out;
+  }
+  .hist-slide-prev {
+    animation: hist-slide-prev 0.25s ease-out;
+  }
+
+  /* Footer: modern translate property (legacy transform + CSS vars оказался ненадежен) */
+  .nav-footer-shown {
+    translate: 0 0;
+    transition: translate 0.3s ease;
+  }
+  .nav-footer-hidden {
+    translate: 0 100%;
+    transition: translate 0.3s ease;
+  }
+  @media (min-width: 640px) {
+    /* На десктопе футер всегда виден */
+    .nav-footer-hidden {
+      translate: 0 0;
+    }
+  }
+}
+
+@keyframes hist-slide-next {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes hist-slide-prev {
+  from {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

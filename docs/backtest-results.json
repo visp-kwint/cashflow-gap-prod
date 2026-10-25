@@ -1,0 +1,1048 @@
+{
+  "params": {
+    "files": [
+      "C001.csv"
+    ],
+    "stepDays": 7,
+    "horizons": [
+      14,
+      30,
+      60
+    ],
+    "testPeriod": {
+      "from": "2026-01-01",
+      "to": "2026-09-30"
+    },
+    "trainPeriod": {
+      "from": "2024-10-01",
+      "to": "2025-12-31"
+    },
+    "minHistoryDays": 90,
+    "thresholds": [
+      "0",
+      "P5",
+      "P10",
+      "P25"
+    ],
+    "warnAtPct": 50,
+    "monteCarloSimulations": 1000,
+    "seed": 20260101,
+    "constantsNote": "Волна C (аудит §2.1): дефолты forecast.config.js переподобраны по абляциям — ownerWithdrawalsEnabled: false, statsWindowMonths: 3 (решение и обоснование — в комментариях конфига и docs/MODEL_COMPARISON.md); подбора на тренировочном периоде не проводилось (датасет организаторов не в репозитории). Вероятность разрыва перекалибрована: изотоническая сетка PAV по бинам калибровки бэктеста (gaps.P25.calibration: 39 точек, 1 факт-разрыв → константа 1/39 ≈ 2,6 %) — см. calibrateGapProbabilityPct в forecast.service.js."
+  },
+  "runAt": "2026-10-25T10:19:47.832Z",
+  "durationSec": 6,
+  "companies": {
+    "C001.csv": {
+      "14": {
+        "evaluatedCuts": 39,
+        "skipped": {
+          "noHistoryOrBalance": 0,
+          "noActualsInWindow": 0
+        },
+        "balance": {
+          "mae": 312042.03410256415,
+          "rmse": 382889.8134979016,
+          "bias": 5873.9402564102065,
+          "naiveMae": 479719.3097435898,
+          "skill": 0.34953205392263487,
+          "min": {
+            "mae": 291745.03,
+            "rmse": 374546.98047115543,
+            "bias": -64796.173076923056,
+            "naiveMae": 315853.6058974359,
+            "skill": 0.07632832251174115
+          }
+        },
+        "balanceUnadjusted": {
+          "mae": 513710.2556410258,
+          "naiveMae": 467717.4566666667,
+          "skill": -0.09833457853410255
+        },
+        "gaps": {
+          "0": {
+            "T": 0,
+            "factGaps": 0,
+            "brierModel": 0.00003466666666666668,
+            "brierConstant": 0,
+            "prf1": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "prf1Unadjusted": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "calibration": [
+              {
+                "bin": "0–10",
+                "meanProbPct": 0.13333333333333336,
+                "actualFreq": 0,
+                "n": 39
+              }
+            ],
+            "leadTime": {
+              "median": null,
+              "p25": null,
+              "n": 0
+            }
+          },
+          "P5": {
+            "T": 827016.9140000001,
+            "factGaps": 0,
+            "brierModel": 0.0003986666666666666,
+            "brierConstant": 0,
+            "prf1": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "prf1Unadjusted": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "calibration": [
+              {
+                "bin": "0–10",
+                "meanProbPct": 1.533333333333334,
+                "actualFreq": 0,
+                "n": 39
+              }
+            ],
+            "leadTime": {
+              "median": null,
+              "p25": null,
+              "n": 0
+            }
+          },
+          "P10": {
+            "T": 1221131.378,
+            "factGaps": 1,
+            "brierModel": 0.026109025641025577,
+            "brierConstant": 0.024983563445101904,
+            "prf1": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "prf1Unadjusted": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 11
+            },
+            "calibration": [
+              {
+                "bin": "0–10",
+                "meanProbPct": 1.800000000000001,
+                "actualFreq": 0.02564102564102564,
+                "n": 39
+              }
+            ],
+            "leadTime": {
+              "median": null,
+              "p25": null,
+              "n": 0
+            }
+          },
+          "P25": {
+            "T": 1461090.09,
+            "factGaps": 7,
+            "brierModel": 0.17202451282051295,
+            "brierConstant": 0.1472715318869165,
+            "prf1": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 7
+            },
+            "prf1Unadjusted": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 23
+            },
+            "calibration": [
+              {
+                "bin": "0–10",
+                "meanProbPct": 2.066666666666668,
+                "actualFreq": 0.1794871794871795,
+                "n": 39
+              }
+            ],
+            "leadTime": {
+              "median": null,
+              "p25": null,
+              "n": 0
+            }
+          }
+        }
+      },
+      "30": {
+        "evaluatedCuts": 39,
+        "skipped": {
+          "noHistoryOrBalance": 0,
+          "noActualsInWindow": 0
+        },
+        "balance": {
+          "mae": 450117.871025641,
+          "rmse": 533460.6129028436,
+          "bias": 92972.37974358971,
+          "naiveMae": 832156.3720512819,
+          "skill": 0.45909460512080014,
+          "min": {
+            "mae": 575569.4425641027,
+            "rmse": 701606.7453204559,
+            "bias": -514240.03641025635,
+            "naiveMae": 577765.8682051282,
+            "skill": 0.0038015842781590203
+          }
+        },
+        "balanceUnadjusted": {
+          "mae": 1127331.3541025638,
+          "naiveMae": 555026.133846154,
+          "skill": -1.03113202308244
+        },
+        "gaps": {
+          "0": {
+            "T": 0,
+            "factGaps": 0,
+            "brierModel": 0.000312,
+            "brierConstant": 0,
+            "prf1": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "prf1Unadjusted": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "calibration": [
+              {
+                "bin": "0–10",
+                "meanProbPct": 1.2000000000000006,
+                "actualFreq": 0,
+                "n": 39
+              }
+            ],
+            "leadTime": {
+              "median": null,
+              "p25": null,
+              "n": 0
+            }
+          },
+          "P5": {
+            "T": 827016.9140000001,
+            "factGaps": 0,
+            "brierModel": 0.0005199999999999998,
+            "brierConstant": 0,
+            "prf1": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "prf1Unadjusted": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "calibration": [
+              {
+                "bin": "0–10",
+                "meanProbPct": 2.000000000000001,
+                "actualFreq": 0,
+                "n": 39
+              }
+            ],
+            "leadTime": {
+              "median": null,
+              "p25": null,
+              "n": 0
+            }
+          },
+          "P10": {
+            "T": 1221131.378,
+            "factGaps": 0,
+            "brierModel": 0.0005546666666666665,
+            "brierConstant": 0,
+            "prf1": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "prf1Unadjusted": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 19
+            },
+            "calibration": [
+              {
+                "bin": "0–10",
+                "meanProbPct": 2.1333333333333346,
+                "actualFreq": 0,
+                "n": 39
+              }
+            ],
+            "leadTime": {
+              "median": null,
+              "p25": null,
+              "n": 0
+            }
+          },
+          "P25": {
+            "T": 1461090.09,
+            "factGaps": 1,
+            "brierModel": 0.02496635897435898,
+            "brierConstant": 0.024983563445101904,
+            "prf1": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "prf1Unadjusted": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 34
+            },
+            "calibration": [
+              {
+                "bin": "0–10",
+                "meanProbPct": 2.533333333333335,
+                "actualFreq": 0.02564102564102564,
+                "n": 39
+              }
+            ],
+            "leadTime": {
+              "median": null,
+              "p25": null,
+              "n": 0
+            }
+          }
+        }
+      },
+      "60": {
+        "evaluatedCuts": 39,
+        "skipped": {
+          "noHistoryOrBalance": 0,
+          "noActualsInWindow": 0
+        },
+        "balance": {
+          "mae": 634701.3430769233,
+          "rmse": 777448.8437745903,
+          "bias": 221091.18358974354,
+          "naiveMae": 1579439.6646153843,
+          "skill": 0.598147775254535,
+          "min": {
+            "mae": 1134790.0248717952,
+            "rmse": 1280912.4968322404,
+            "bias": -1132417.9361538466,
+            "naiveMae": 1118700.3633333333,
+            "skill": -0.014382458490064698
+          }
+        },
+        "balanceUnadjusted": {
+          "mae": 1956988.6194871797,
+          "naiveMae": 638386.6956410259,
+          "skill": -2.0655222498365204
+        },
+        "gaps": {
+          "0": {
+            "T": 0,
+            "factGaps": 0,
+            "brierModel": 0.0003466666666666666,
+            "brierConstant": 0,
+            "prf1": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "prf1Unadjusted": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "calibration": [
+              {
+                "bin": "0–10",
+                "meanProbPct": 1.333333333333334,
+                "actualFreq": 0,
+                "n": 39
+              }
+            ],
+            "leadTime": {
+              "median": null,
+              "p25": null,
+              "n": 0
+            }
+          },
+          "P5": {
+            "T": 827016.9140000001,
+            "factGaps": 0,
+            "brierModel": 0.0005373333333333332,
+            "brierConstant": 0,
+            "prf1": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "prf1Unadjusted": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "calibration": [
+              {
+                "bin": "0–10",
+                "meanProbPct": 2.066666666666668,
+                "actualFreq": 0,
+                "n": 39
+              }
+            ],
+            "leadTime": {
+              "median": null,
+              "p25": null,
+              "n": 0
+            }
+          },
+          "P10": {
+            "T": 1221131.378,
+            "factGaps": 0,
+            "brierModel": 0.0006239999999999998,
+            "brierConstant": 0,
+            "prf1": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "prf1Unadjusted": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 28
+            },
+            "calibration": [
+              {
+                "bin": "0–10",
+                "meanProbPct": 2.4000000000000012,
+                "actualFreq": 0,
+                "n": 39
+              }
+            ],
+            "leadTime": {
+              "median": null,
+              "p25": null,
+              "n": 0
+            }
+          },
+          "P25": {
+            "T": 1461090.09,
+            "factGaps": 0,
+            "brierModel": 0.0006586666666666664,
+            "brierConstant": 0,
+            "prf1": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "prf1Unadjusted": {
+              "precision": 0,
+              "recall": 0,
+              "f1": 0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 39
+            },
+            "calibration": [
+              {
+                "bin": "0–10",
+                "meanProbPct": 2.533333333333335,
+                "actualFreq": 0,
+                "n": 39
+              }
+            ],
+            "leadTime": {
+              "median": null,
+              "p25": null,
+              "n": 0
+            }
+          }
+        }
+      }
+    }
+  },
+  "overall": {
+    "14": {
+      "evaluatedCuts": 39,
+      "skipped": {
+        "noHistoryOrBalance": 0,
+        "noActualsInWindow": 0
+      },
+      "balance": {
+        "mae": 312042.03410256415,
+        "rmse": 382889.8134979016,
+        "bias": 5873.9402564102065,
+        "naiveMae": 479719.3097435898,
+        "skill": 0.34953205392263487,
+        "min": {
+          "mae": 291745.03,
+          "rmse": 374546.98047115543,
+          "bias": -64796.173076923056,
+          "naiveMae": 315853.6058974359,
+          "skill": 0.07632832251174115
+        }
+      },
+      "balanceUnadjusted": {
+        "mae": 513710.2556410258,
+        "naiveMae": 467717.4566666667,
+        "skill": -0.09833457853410255
+      },
+      "gaps": {
+        "0": {
+          "T": 0,
+          "factGaps": 0,
+          "brierModel": 0.00003466666666666668,
+          "brierConstant": 0,
+          "prf1": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "prf1Unadjusted": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "calibration": [
+            {
+              "bin": "0–10",
+              "meanProbPct": 0.13333333333333336,
+              "actualFreq": 0,
+              "n": 39
+            }
+          ],
+          "leadTime": {
+            "median": null,
+            "p25": null,
+            "n": 0
+          }
+        },
+        "P5": {
+          "T": 827016.9140000001,
+          "factGaps": 0,
+          "brierModel": 0.0003986666666666666,
+          "brierConstant": 0,
+          "prf1": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "prf1Unadjusted": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "calibration": [
+            {
+              "bin": "0–10",
+              "meanProbPct": 1.533333333333334,
+              "actualFreq": 0,
+              "n": 39
+            }
+          ],
+          "leadTime": {
+            "median": null,
+            "p25": null,
+            "n": 0
+          }
+        },
+        "P10": {
+          "T": 1221131.378,
+          "factGaps": 1,
+          "brierModel": 0.026109025641025577,
+          "brierConstant": 0.024983563445101904,
+          "prf1": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "prf1Unadjusted": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "calibration": [
+            {
+              "bin": "0–10",
+              "meanProbPct": 1.800000000000001,
+              "actualFreq": 0.02564102564102564,
+              "n": 39
+            }
+          ],
+          "leadTime": {
+            "median": null,
+            "p25": null,
+            "n": 0
+          }
+        },
+        "P25": {
+          "T": 1461090.09,
+          "factGaps": 7,
+          "brierModel": 0.17202451282051295,
+          "brierConstant": 0.1472715318869165,
+          "prf1": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "prf1Unadjusted": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 23
+          },
+          "calibration": [
+            {
+              "bin": "0–10",
+              "meanProbPct": 2.066666666666668,
+              "actualFreq": 0.1794871794871795,
+              "n": 39
+            }
+          ],
+          "leadTime": {
+            "median": null,
+            "p25": null,
+            "n": 0
+          }
+        }
+      }
+    },
+    "30": {
+      "evaluatedCuts": 39,
+      "skipped": {
+        "noHistoryOrBalance": 0,
+        "noActualsInWindow": 0
+      },
+      "balance": {
+        "mae": 450117.871025641,
+        "rmse": 533460.6129028436,
+        "bias": 92972.37974358971,
+        "naiveMae": 832156.3720512819,
+        "skill": 0.45909460512080014,
+        "min": {
+          "mae": 575569.4425641027,
+          "rmse": 701606.7453204559,
+          "bias": -514240.03641025635,
+          "naiveMae": 577765.8682051282,
+          "skill": 0.0038015842781590203
+        }
+      },
+      "balanceUnadjusted": {
+        "mae": 1127331.3541025638,
+        "naiveMae": 555026.133846154,
+        "skill": -1.03113202308244
+      },
+      "gaps": {
+        "0": {
+          "T": 0,
+          "factGaps": 0,
+          "brierModel": 0.000312,
+          "brierConstant": 0,
+          "prf1": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "prf1Unadjusted": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "calibration": [
+            {
+              "bin": "0–10",
+              "meanProbPct": 1.2000000000000006,
+              "actualFreq": 0,
+              "n": 39
+            }
+          ],
+          "leadTime": {
+            "median": null,
+            "p25": null,
+            "n": 0
+          }
+        },
+        "P5": {
+          "T": 827016.9140000001,
+          "factGaps": 0,
+          "brierModel": 0.0005199999999999998,
+          "brierConstant": 0,
+          "prf1": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "prf1Unadjusted": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "calibration": [
+            {
+              "bin": "0–10",
+              "meanProbPct": 2.000000000000001,
+              "actualFreq": 0,
+              "n": 39
+            }
+          ],
+          "leadTime": {
+            "median": null,
+            "p25": null,
+            "n": 0
+          }
+        },
+        "P10": {
+          "T": 1221131.378,
+          "factGaps": 0,
+          "brierModel": 0.0005546666666666665,
+          "brierConstant": 0,
+          "prf1": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "prf1Unadjusted": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 19
+          },
+          "calibration": [
+            {
+              "bin": "0–10",
+              "meanProbPct": 2.1333333333333346,
+              "actualFreq": 0,
+              "n": 39
+            }
+          ],
+          "leadTime": {
+            "median": null,
+            "p25": null,
+            "n": 0
+          }
+        },
+        "P25": {
+          "T": 1461090.09,
+          "factGaps": 1,
+          "brierModel": 0.02496635897435898,
+          "brierConstant": 0.024983563445101904,
+          "prf1": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "prf1Unadjusted": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 34
+          },
+          "calibration": [
+            {
+              "bin": "0–10",
+              "meanProbPct": 2.533333333333335,
+              "actualFreq": 0.02564102564102564,
+              "n": 39
+            }
+          ],
+          "leadTime": {
+            "median": null,
+            "p25": null,
+            "n": 0
+          }
+        }
+      }
+    },
+    "60": {
+      "evaluatedCuts": 39,
+      "skipped": {
+        "noHistoryOrBalance": 0,
+        "noActualsInWindow": 0
+      },
+      "balance": {
+        "mae": 634701.3430769233,
+        "rmse": 777448.8437745903,
+        "bias": 221091.18358974354,
+        "naiveMae": 1579439.6646153843,
+        "skill": 0.598147775254535,
+        "min": {
+          "mae": 1134790.0248717952,
+          "rmse": 1280912.4968322404,
+          "bias": -1132417.9361538466,
+          "naiveMae": 1118700.3633333333,
+          "skill": -0.014382458490064698
+        }
+      },
+      "balanceUnadjusted": {
+        "mae": 1956988.6194871797,
+        "naiveMae": 638386.6956410259,
+        "skill": -2.0655222498365204
+      },
+      "gaps": {
+        "0": {
+          "T": 0,
+          "factGaps": 0,
+          "brierModel": 0.0003466666666666666,
+          "brierConstant": 0,
+          "prf1": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "prf1Unadjusted": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "calibration": [
+            {
+              "bin": "0–10",
+              "meanProbPct": 1.333333333333334,
+              "actualFreq": 0,
+              "n": 39
+            }
+          ],
+          "leadTime": {
+            "median": null,
+            "p25": null,
+            "n": 0
+          }
+        },
+        "P5": {
+          "T": 827016.9140000001,
+          "factGaps": 0,
+          "brierModel": 0.0005373333333333332,
+          "brierConstant": 0,
+          "prf1": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "prf1Unadjusted": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "calibration": [
+            {
+              "bin": "0–10",
+              "meanProbPct": 2.066666666666668,
+              "actualFreq": 0,
+              "n": 39
+            }
+          ],
+          "leadTime": {
+            "median": null,
+            "p25": null,
+            "n": 0
+          }
+        },
+        "P10": {
+          "T": 1221131.378,
+          "factGaps": 0,
+          "brierModel": 0.0006239999999999998,
+          "brierConstant": 0,
+          "prf1": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "prf1Unadjusted": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 28
+          },
+          "calibration": [
+            {
+              "bin": "0–10",
+              "meanProbPct": 2.4000000000000012,
+              "actualFreq": 0,
+              "n": 39
+            }
+          ],
+          "leadTime": {
+            "median": null,
+            "p25": null,
+            "n": 0
+          }
+        },
+        "P25": {
+          "T": 1461090.09,
+          "factGaps": 0,
+          "brierModel": 0.0006586666666666664,
+          "brierConstant": 0,
+          "prf1": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "prf1Unadjusted": {
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 39
+          },
+          "calibration": [
+            {
+              "bin": "0–10",
+              "meanProbPct": 2.533333333333335,
+              "actualFreq": 0,
+              "n": 39
+            }
+          ],
+          "leadTime": {
+            "median": null,
+            "p25": null,
+            "n": 0
+          }
+        }
+      }
+    }
+  }
+}

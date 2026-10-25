@@ -1,0 +1,117 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  companyName  String
+  inn          String
+  minBalance   Float    @default(0)
+  createdAt    DateTime @default(now())
+  
+  operations   Operation[]
+  risks        Risk[]
+  tickets      SupportTicket[]
+  scenarios    SandboxScenario[]
+  plannedEvents PlannedEvent[]
+}
+
+model Operation {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date             DateTime
+  amount           Float             // всегда положительное
+  direction        String            // "in" | "out"
+  category         String            // "income" | "expense" | "payment" | "tax" | "salary" | "other"
+  subcategory      String?           // ТЗ-доработка WP-3 §2.1: подкатегория (17 слогов, см. src/config/categories.config.js); null — не категоризована
+  categoryConfidence Float?          // доверие категоризации 0..1 (rule) или null (manual)
+  categorySource   String   @default("rule") // "rule" | "manual" (исходник правила, TZ §2.3)
+  // Отчёт §8.2–8.7 (минимальный вариант): класс плановости, выводится при категоризации
+  plannedness           String?          // "planned_fixed" | "planned_scheduled" | "recurring_variable" | "unplanned_operational" | "unplanned_capex" | "owner_discretionary" | "non_expense"; null — не классифицирована
+  plannednessConfidence Float?           // доверие класса 0..1
+  plannednessSource     String? @default("rule") // "rule" | "recurrence" | "plan_match" | "manual"
+  counterpartyName String            // хранится обезличенным
+  counterpartyInn  String            // хранится обезличенным
+  purpose          String
+  balanceEndOfDay  Float
+  source           String            // "import" | "manual" | "bank_stub" | "self_loan" | "bank_loan" | "payment"
+  externalId       String?           // operation_id из выписки (для дедупликации при повторном импорте)
+  createdAt        DateTime @default(now())
+
+  @@index([userId, date])
+  @@unique([userId, externalId])
+}
+
+model Risk {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  type        String            // "income_loss" | "unplanned_expense"
+  amount      Float
+  dateFrom    DateTime
+  dateTo      DateTime?
+  probability Float             // 0..1
+  source      String            // "auto" | "manual"
+  active      Boolean  @default(true)
+}
+
+model SupportTicket {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subject   String
+  kind      String            // "problem" | "question"
+  message   String
+  status    String   @default("new")
+  createdAt DateTime @default(now())
+}
+
+model PlannedEvent {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id])
+  type             String            // "contract" | "invoice" | "tax"
+  title            String
+  amount           Float             // строго > 0
+  direction        String            // "in" | "out"
+  expectedDate     DateTime
+  issueDate        DateTime?
+  deferralDays     Int      @default(0)
+  prepaymentPct    Float?
+  counterpartyName String?
+  counterpartyInn  String?
+  counterpartyRisk String   @default("low")
+  source           String            // "1c" | "edo" | "ofd" | "marketplace" | "tax_calendar" | "manual"
+  status           String   @default("pending")
+  active           Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  // ТЗ-доработка WP-5: сверка план-факт (paid / partial / paid_late)
+  paidAmount       Float    @default(0)
+  factOperationId  String?
+  deviationDays    Int?
+
+  @@index([userId, expectedDate])
+}
+
+model SandboxScenario {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  amount    Float
+  date      DateTime
+  repeats   Int      @default(1)
+  createdAt DateTime @default(now())
+  // ТЗ-доработка WP-4: тип сценария — legacy синтетические операции / 4 негативных типа
+  kind     String  @default("custom_event")
+  params   String? // JSON-параметры негативного сценария (WP-4)
+}

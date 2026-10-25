@@ -1,0 +1,45 @@
+# CI: push/PR → сервер (тесты + ESLint) и клиент (tsc + ESLint + Vite build).
+# Локально те же шаги: npm test, npm run lint, npm run build (корень).
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: install (server)
+        run: npm install --prefix server
+      - name: prisma generate
+        working-directory: server
+        run: npx prisma generate
+      - name: prisma migrate deploy
+        working-directory: server
+        run: npx prisma migrate deploy
+      - name: tests
+        working-directory: server
+        run: npx vitest run
+      - name: eslint
+        working-directory: server
+        run: npm run lint
+  client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: install (client)
+        run: npm install --prefix client
+      - name: eslint
+        working-directory: client
+        run: npm run lint
+      - name: tsc + vite build
+        working-directory: client
+        run: npm run build

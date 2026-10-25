@@ -1,0 +1,23 @@
+/* Появление диаграммы категории: лёгкий подъём кольца, секции дорисовывает sweep Recharts */
+.category-pie-enter {
+  animation: category-pie-in 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: center;
+}
+
+@keyframes category-pie-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94) rotate(-8deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* При смене периода (items меняются) анимация реплеется через key на обёртке */
+@media (prefers-reduced-motion: reduce) {
+  .category-pie-enter {
+    animation: none;
+  }
+}

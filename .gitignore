@@ -1,0 +1,27 @@
+# зависимости
+node_modules/
+
+# сборка
+dist/
+
+# переменные окружения (секреты — только в .env, см. ТЗ §9)
+.env
+.env.local
+.env.*.local
+
+# БД (локальная)
+*.db
+*.sqlite
+*.sqlite3
+
+# прочее
+*.log
+.DS_Store
+.vite/
+client/tsconfig.tsbuildinfo
+
+# датасет организаторов (не коммитится, см. ТЗ-доработка WP-1 п. 3)
+test-data/statements/
+coverage/
+*.local
+.unlazy/

@@ -1,0 +1,17 @@
+{
+  "name": "cashflow-gap-hackaton",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Прогноз кассовых разрывов (хакаатон 2026): клиент + бэкенд",
+  "scripts": {
+    "setup": "node scripts/prepare-env.mjs && npm install --prefix server && npm install --prefix client && npm run prisma:migrate --prefix server && npm run seed --prefix server",
+    "dev": "concurrently -n server,client -c blue,green \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "test": "npm test --prefix server",
+    "lint": "npm run lint --prefix client && npm run lint --prefix server",
+    "build": "npm run build --prefix client",
+    "backtest": "npm run backtest --prefix server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

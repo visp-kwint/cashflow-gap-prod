@@ -1,0 +1,10 @@
+node_modules/
+*.log
+.env
+.env.local
+prisma/migrations/*.json
+.DS_Store
+coverage/
+.vscode/
+.idea/
+dev.db
